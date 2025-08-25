@@ -1,16 +1,13 @@
 import { ButtonSearch } from "../../components/UI/ButtonSearch";
 import { CardCar } from "../../components/CardCar";
+import { InputCustom } from "../../components/UI/InputCustom";
 
 export default function Home() {
   return (
     <div className="container px-4 mx-auto my-8">
       <section className="my-20">
         <form className="flex gap-6">
-          <input
-            className="h-10 border px-4 rounded-md flex items-center flex-1"
-            type="text"
-            placeholder="Digite o nome do carro..."
-          />
+          <InputCustom placeholder="Digite o nome do carro..." />
           <ButtonSearch>Buscar</ButtonSearch>
         </form>
       </section>
