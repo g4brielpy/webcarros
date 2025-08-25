@@ -16,9 +16,10 @@ export function InputCustom({ label, error, ...props }: InputCustomProps) {
 
       <input
         {...props}
-        className={`h-11 px-4 rounded-md border text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 ${
-          error ? "border-red-500" : "border-gray-300"
-        }`}
+        className={`h-11 px-4 rounded-md border text-gray-900 placeholder-gray-700
+          bg-gray-50 shadow-sm transition-all duration-200 ease-in-out
+          focus:outline-none focus:border-[#E11138] focus:ring-2 focus:ring-[#E11138] focus:shadow-md
+          ${error ? "border-red-500" : "border-gray-400"}`}
       />
 
       {error && <span className="mt-1 text-sm text-red-500">{error}</span>}
