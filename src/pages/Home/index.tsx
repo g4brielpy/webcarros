@@ -1,6 +1,6 @@
-import { ButtonSearch } from "../../components/UI/ButtonSearch";
 import { CardCar } from "../../components/CardCar";
 import { InputCustom } from "../../components/UI/InputCustom";
+import { ButtonCustom } from "../../components/UI/ButtonCustom";
 
 export default function Home() {
   return (
@@ -8,7 +8,7 @@ export default function Home() {
       <section className="my-20">
         <form className="flex gap-6">
           <InputCustom placeholder="Digite o nome do carro..." />
-          <ButtonSearch>Buscar</ButtonSearch>
+          <ButtonCustom>Buscar</ButtonCustom>
         </form>
       </section>
 
