@@ -1,4 +1,5 @@
 import { ButtonSearch } from "../../components/UI/ButtonSearch";
+import { CardCar } from "../../components/CardCar";
 
 export default function Home() {
   return (
@@ -19,77 +20,14 @@ export default function Home() {
           Carros novos e usados em todo Brasil
         </h1>
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-amber-300 w-[500px]">
-            <div id="contentWrapper">
-              <img
-                src="https://image.webmotors.com.br/_fotos/anunciousados/gigante/2025/202508/20250825/bmw-x5-3-0-i6-turbo-hibrido-xdrive50e-m-sport-automatico-wmimagem12201877439.webp?s=fill&w=552&h=414&q=60"
-                alt="Carro"
-              />
-            </div>
-            <div id="contentInfos" className="flex flex-col">
-              <h3>BMW X5</h3>
-              <small>2023/2024 | 14.000 KM</small>
-              <strong>R$ 615.900</strong>
-            </div>
-
-            <hr />
-
-            <p>Belo Horizonte - MG</p>
-          </div>
-
-          <div className="bg-amber-300 w-[500px]">
-            <div id="contentWrapper">
-              <img
-                src="https://image.webmotors.com.br/_fotos/anunciousados/gigante/2025/202508/20250825/bmw-x5-3-0-i6-turbo-hibrido-xdrive50e-m-sport-automatico-wmimagem12201877439.webp?s=fill&w=552&h=414&q=60"
-                alt="Carro"
-              />
-            </div>
-            <div id="contentInfos" className="flex flex-col">
-              <h3>BMW X5</h3>
-              <small>2023/2024 | 14.000 KM</small>
-              <strong>R$ 615.900</strong>
-            </div>
-
-            <hr />
-
-            <p>Belo Horizonte - MG</p>
-          </div>
-
-          <div className="bg-amber-300 w-[500px]">
-            <div id="contentWrapper">
-              <img
-                src="https://image.webmotors.com.br/_fotos/anunciousados/gigante/2025/202508/20250825/bmw-x5-3-0-i6-turbo-hibrido-xdrive50e-m-sport-automatico-wmimagem12201877439.webp?s=fill&w=552&h=414&q=60"
-                alt="Carro"
-              />
-            </div>
-            <div id="contentInfos" className="flex flex-col">
-              <h3>BMW X5</h3>
-              <small>2023/2024 | 14.000 KM</small>
-              <strong>R$ 615.900</strong>
-            </div>
-
-            <hr />
-
-            <p>Belo Horizonte - MG</p>
-          </div>
-
-          <div className="bg-amber-300 w-[500px]">
-            <div id="contentWrapper">
-              <img
-                src="https://image.webmotors.com.br/_fotos/anunciousados/gigante/2025/202508/20250825/bmw-x5-3-0-i6-turbo-hibrido-xdrive50e-m-sport-automatico-wmimagem12201877439.webp?s=fill&w=552&h=414&q=60"
-                alt="Carro"
-              />
-            </div>
-            <div id="contentInfos" className="flex flex-col">
-              <h3>BMW X5</h3>
-              <small>2023/2024 | 14.000 KM</small>
-              <strong>R$ 615.900</strong>
-            </div>
-
-            <hr />
-
-            <p>Belo Horizonte - MG</p>
-          </div>
+          <CardCar />
+          <CardCar />
+          <CardCar />
+          <CardCar />
+          <CardCar />
+          <CardCar />
+          <CardCar />
+          <CardCar />
         </section>
       </main>
     </div>
