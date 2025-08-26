@@ -5,7 +5,7 @@ import { ButtonCustom } from "../../components/UI/ButtonCustom";
 export default function Login() {
   return (
     <main className="w-full h-dvh flex items-center">
-      <div className="container max-w-[800px] mx-auto">
+      <div className="container px-4 max-w-[800px] mx-auto">
         <Link to={"/login"}>
           <img
             src="/public/webCarrosLogo.svg"
@@ -19,6 +19,9 @@ export default function Login() {
           <InputCustom type="password" placeholder="Digite sua Senha" />
           <ButtonCustom className="w-full">Acessar</ButtonCustom>
         </form>
+        <small className="inline-block mt-4 md:text-sm hover:underline">
+          <Link to={"/register"}>Ainda não possui uma conta? Cadastre-se</Link>
+        </small>
       </div>
     </main>
   );
