@@ -2,7 +2,21 @@ import { Link } from "react-router";
 import { InputCustom } from "../../components/UI/InputCustom";
 import { ButtonCustom } from "../../components/UI/ButtonCustom";
 
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema, FormData } from "../../schemas/loginSchema";
+
 export default function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmitLogin = (data: FormData) => console.log(data);
+
   return (
     <main className="w-full h-dvh flex items-center">
       <div className="container px-4 max-w-[800px] mx-auto">
@@ -14,9 +28,19 @@ export default function Login() {
           />
         </Link>
 
-        <form className="space-y-6">
-          <InputCustom type="email" placeholder="Digite seu E-mail" />
-          <InputCustom type="password" placeholder="Digite sua Senha" />
+        <form className="space-y-6" onSubmit={handleSubmit(onSubmitLogin)}>
+          <InputCustom
+            type="email"
+            placeholder="Digite seu E-mail"
+            {...register("email")}
+            error={errors.email?.message}
+          />
+          <InputCustom
+            type="password"
+            placeholder="Digite sua Senha"
+            {...register("password")}
+            error={errors.password?.message}
+          />
           <ButtonCustom className="w-full">Acessar</ButtonCustom>
         </form>
         <small className="inline-block mt-4 md:text-sm hover:underline">
