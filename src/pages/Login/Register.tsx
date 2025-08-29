@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router";
+
 import { InputCustom } from "../../components/UI/InputCustom";
 import { ButtonCustom } from "../../components/UI/ButtonCustom";
 
@@ -7,7 +9,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, FormData } from "../../schemas/registerSchema";
 
 import { auth } from "../../firebase/firebaseConnection";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -30,6 +36,10 @@ export default function Register() {
         console.log("Erro ao realizar cadastro: " + error);
       });
   };
+
+  useEffect(() => {
+    signOut(auth);
+  }, []);
 
   return (
     <main className="w-full h-dvh flex items-center">

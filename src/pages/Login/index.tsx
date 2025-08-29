@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 
 import { InputCustom } from "../../components/UI/InputCustom";
@@ -8,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, FormData } from "../../schemas/loginSchema";
 
 import { auth } from "../../firebase/firebaseConnection";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -34,6 +35,10 @@ export default function Login() {
         console.log("Erro ao fazer login:", error.message);
       });
   };
+
+  useEffect(() => {
+    signOut(auth);
+  }, []);
 
   return (
     <main className="w-full h-dvh flex items-center">
