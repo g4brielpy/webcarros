@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { InputCustom } from "../../components/UI/InputCustom";
 import { ButtonCustom } from "../../components/UI/ButtonCustom";
 
@@ -10,6 +10,8 @@ import { auth } from "../../firebase/firebaseConnection";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 export default function Register() {
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
@@ -21,6 +23,8 @@ export default function Register() {
       .then(async (user) => {
         await updateProfile(user.user, { displayName: data.name });
         console.log("Cadastrado com sucesso!");
+
+        navigate("/dashboard");
       })
       .catch((error) => {
         console.log("Erro ao realizar cadastro: " + error);

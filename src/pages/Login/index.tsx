@@ -1,4 +1,5 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+
 import { InputCustom } from "../../components/UI/InputCustom";
 import { ButtonCustom } from "../../components/UI/ButtonCustom";
 
@@ -10,6 +11,8 @@ import { auth } from "../../firebase/firebaseConnection";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -24,6 +27,8 @@ export default function Login() {
         console.log(
           "Usuário logado com sucesso: " + userCredential.user.displayName
         );
+
+        navigate("/dashboard");
       })
       .catch((error) => {
         console.log("Erro ao fazer login:", error.message);
