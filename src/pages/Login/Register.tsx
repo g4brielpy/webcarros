@@ -6,6 +6,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, FormData } from "../../schemas/registerSchema";
 
+import { auth } from "../../firebase/firebaseConnection";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+
 export default function Register() {
   const {
     handleSubmit,
@@ -13,7 +16,16 @@ export default function Register() {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(registerSchema) });
 
-  const onSubmitRegister = (data: FormData) => console.log(data);
+  const onSubmitRegister = async (data: FormData) => {
+    await createUserWithEmailAndPassword(auth, data.email, data.password)
+      .then(async (user) => {
+        await updateProfile(user.user, { displayName: data.name });
+        console.log("Cadastrado com sucesso!");
+      })
+      .catch((error) => {
+        console.log("Erro ao realizar cadastro: " + error);
+      });
+  };
 
   return (
     <main className="w-full h-dvh flex items-center">
