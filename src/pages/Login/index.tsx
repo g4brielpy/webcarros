@@ -6,6 +6,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, FormData } from "../../schemas/loginSchema";
 
+import { auth } from "../../firebase/firebaseConnection";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 export default function Login() {
   const {
     register,
@@ -15,7 +18,17 @@ export default function Login() {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmitLogin = (data: FormData) => console.log(data);
+  const onSubmitLogin = async (data: FormData) => {
+    signInWithEmailAndPassword(auth, data.email, data.password)
+      .then((userCredential) => {
+        console.log(
+          "Usuário logado com sucesso: " + userCredential.user.displayName
+        );
+      })
+      .catch((error) => {
+        console.log("Erro ao fazer login:", error.message);
+      });
+  };
 
   return (
     <main className="w-full h-dvh flex items-center">
