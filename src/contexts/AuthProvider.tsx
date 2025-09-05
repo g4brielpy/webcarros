@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (userState) => {
       if (userState) {
-        console.log("Tem usuário logado " + userState.email);
         setUser({
           uid: userState.uid,
           email: userState.email || "",
