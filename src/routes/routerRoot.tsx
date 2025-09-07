@@ -8,6 +8,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Login/Register";
 
 import LayoutRoot from "../layout/LayoutRoot";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,11 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <Dashboard />,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
         children: [
           {
             path: "newcar",
