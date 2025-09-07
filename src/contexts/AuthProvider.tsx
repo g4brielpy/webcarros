@@ -2,12 +2,14 @@ import { ReactNode, useEffect, useState } from "react";
 import { AuthContext, userProps } from "./AuthContext";
 
 import { auth } from "../firebase/firebaseConnection";
-import { UserCredential } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 
 import {
-  onAuthStateChanged,
+  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
+  UserCredential,
+  updateProfile,
   signOut,
 } from "firebase/auth";
 
@@ -26,6 +28,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         password
       );
       return userCredential;
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        throw new Error(error.message);
+      }
+      throw error;
+    }
+  }
+
+  async function registerUser(
+    name: string,
+    email: string,
+    password: string
+  ): Promise<UserCredential | Error> {
+    try {
+      const profileSucess = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await updateProfile(profileSucess.user, { displayName: name });
+      return profileSucess;
     } catch (error) {
       if (error instanceof FirebaseError) {
         throw new Error(error.message);
@@ -55,7 +79,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, signed, login, logout }}>
+    <AuthContext.Provider value={{ user, signed, login, registerUser, logout }}>
       {children}
     </AuthContext.Provider>
   );
