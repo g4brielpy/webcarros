@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router";
 
 import { InputCustom } from "../../components/UI/InputCustom";
@@ -8,15 +8,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, FormData } from "../../schemas/registerSchema";
 
-import { auth } from "../../firebase/firebaseConnection";
-import {
-  createUserWithEmailAndPassword,
-  signOut,
-  updateProfile,
-} from "firebase/auth";
+import { AuthContext, AuthContextType } from "../../contexts/AuthContext";
+import { FirebaseError } from "firebase/app";
 
 export default function Register() {
   const navigate = useNavigate();
+  const authContext = useContext<AuthContextType | null>(AuthContext);
 
   const {
     handleSubmit,
@@ -25,21 +22,35 @@ export default function Register() {
   } = useForm<FormData>({ resolver: zodResolver(registerSchema) });
 
   const onSubmitRegister = async (data: FormData) => {
-    await createUserWithEmailAndPassword(auth, data.email, data.password)
-      .then(async (user) => {
-        await updateProfile(user.user, { displayName: data.name });
-        console.log("Cadastrado com sucesso!");
+    try {
+      await authContext?.registerUser(data.name, data.email, data.password);
+      navigate("/dashboard");
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case "auth/email-already-in-use":
+            alert("Este e-mail já está sendo usado.");
+            break;
+          case "auth/invalid-email":
+            alert("O e-mail informado não é válido.");
+            break;
+          case "auth/weak-password":
+            alert("A senha deve ter pelo menos 6 caracteres.");
+            break;
+          default:
+            alert("Erro ao realizar cadastro. Tente novamente.");
+        }
+      } else {
+        alert("Erro inesperado no registro.");
+      }
 
-        navigate("/dashboard");
-      })
-      .catch((error) => {
-        console.log("Erro ao realizar cadastro: " + error);
-      });
+      console.error("Erro ao realizar cadastro:", error);
+    }
   };
 
   useEffect(() => {
-    signOut(auth);
-  }, []);
+    authContext?.logout();
+  }, [authContext]);
 
   return (
     <main className="w-full h-dvh flex items-center">

@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return userCredential;
     } catch (error) {
       if (error instanceof FirebaseError) {
-        throw new Error(error.message);
+        throw error;
       }
       throw error;
     }
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return profileSucess;
     } catch (error) {
       if (error instanceof FirebaseError) {
-        throw new Error(error.message);
+        throw error;
       }
       throw error;
     }
