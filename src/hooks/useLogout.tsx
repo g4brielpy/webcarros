@@ -2,7 +2,7 @@
 import { useEffect, useContext } from "react";
 import { AuthContext, AuthContextType } from "../contexts/AuthContext";
 
-export function useLogoutOnMount() {
+export function useLogout() {
   const auth = useContext<AuthContextType | null>(AuthContext);
 
   useEffect(() => {
