@@ -1,4 +1,5 @@
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
+import { useLogout } from "../../hooks/useLogout";
 import { Link, useNavigate } from "react-router";
 
 import { InputCustom } from "../../components/UI/InputCustom";
@@ -45,9 +46,7 @@ export default function Login() {
     }
   };
 
-  useEffect(() => {
-    authLogin?.logout();
-  }, [authLogin]);
+  useLogout();
 
   return (
     <main className="w-full h-dvh flex items-center">
