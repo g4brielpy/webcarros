@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, FormData } from "../../schemas/loginSchema";
 
 import { AuthContext, AuthContextType } from "../../contexts/AuthContext";
+import { FirebaseError } from "firebase/app";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -23,8 +24,25 @@ export default function Login() {
   });
 
   const onSubmitLogin = async (data: FormData) => {
-    authLogin?.login(data.email, data.password);
-    navigate("/dashboard");
+    try {
+      await authLogin?.login(data.email, data.password);
+      navigate("/dashboard");
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case "auth/user-not-found":
+            alert("Usuário não encontrado.");
+            break;
+          case "auth/wrong-password":
+            alert("Senha incorreta.");
+            break;
+          default:
+            alert("Erro ao tentar fazer login. Tente novamente.");
+        }
+      } else {
+        alert("Erro inesperado.");
+      }
+    }
   };
 
   useEffect(() => {
