@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router";
 
 import { InputCustom } from "../../components/UI/InputCustom";
@@ -8,11 +8,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, FormData } from "../../schemas/loginSchema";
 
-import { auth } from "../../firebase/firebaseConnection";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { AuthContext, AuthContextType } from "../../contexts/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
+  const authLogin = useContext<AuthContextType | null>(AuthContext);
 
   const {
     register,
@@ -23,22 +23,13 @@ export default function Login() {
   });
 
   const onSubmitLogin = async (data: FormData) => {
-    signInWithEmailAndPassword(auth, data.email, data.password)
-      .then((userCredential) => {
-        console.log(
-          "Usuário logado com sucesso: " + userCredential.user.displayName
-        );
-
-        navigate("/dashboard");
-      })
-      .catch((error) => {
-        console.log("Erro ao fazer login:", error.message);
-      });
+    authLogin?.login(data.email, data.password);
+    navigate("/dashboard");
   };
 
   useEffect(() => {
-    signOut(auth);
-  }, []);
+    authLogin?.logout();
+  }, [authLogin]);
 
   return (
     <main className="w-full h-dvh flex items-center">

@@ -2,6 +2,9 @@ import { ReactNode, useEffect, useState } from "react";
 import { AuthContext, userProps } from "./AuthContext";
 
 import { auth } from "../firebase/firebaseConnection";
+import { UserCredential } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
+
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -12,19 +15,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<userProps>(null);
   const signed: boolean = !!user;
 
-  function login(email: string, password: string) {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(
-          "Usuário logado com sucesso: " + userCredential.user.displayName
-        );
-      })
-      .catch((error) => {
-        console.log("Erro ao fazer login:", error.message);
-      });
+  async function login(
+    email: string,
+    password: string
+  ): Promise<UserCredential | Error> {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      return userCredential;
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        throw new Error(error.message);
+      }
+      throw error;
+    }
   }
 
-  function logout() {
+  function logout(): void {
     signOut(auth);
   }
 
