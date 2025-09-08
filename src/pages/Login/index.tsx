@@ -31,6 +31,9 @@ export default function Login() {
     } catch (error) {
       if (error instanceof FirebaseError) {
         switch (error.code) {
+          case "auth/invalid-credential":
+            alert("E-mail ou senha incorretos.");
+            break;
           case "auth/user-not-found":
             alert("Usuário não encontrado.");
             break;

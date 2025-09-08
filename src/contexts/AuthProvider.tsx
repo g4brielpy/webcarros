@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (error instanceof FirebaseError) {
         throw error;
       }
-      throw error;
+      throw new Error("Erro inesperado ao tentar fazer login");
     }
   }
 
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (error instanceof FirebaseError) {
         throw error;
       }
-      throw error;
+      throw new Error("Erro inesperado ao tentar fazer login");
     }
   }
 
