@@ -12,8 +12,8 @@ export function HeaderDashboard() {
     "
     >
       <nav className="space-x-6">
-        <Link to={"/dashbord"}>Dashbord</Link>
-        <Link to={"/dashbord/newcar"}>Novo carro</Link>
+        <Link to={"/dashboard"}>Dashbord</Link>
+        <Link to={"/dashboard/newcar"}>Novo carro</Link>
       </nav>
     </header>
   );
