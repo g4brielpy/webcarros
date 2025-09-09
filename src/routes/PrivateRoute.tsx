@@ -9,7 +9,17 @@ interface PrivateRouteProps {
 export default function PrivateRoute({ children }: PrivateRouteProps) {
   const authContext = useContext<AuthContextType | null>(AuthContext);
 
-  if (!authContext?.signed) {
+  if (!authContext) return null;
+
+  if (authContext.loading) {
+    return (
+      <div className="flex items-center justify-center h-dvh text-2xl font-bold">
+        Carregando...
+      </div>
+    );
+  }
+
+  if (!authContext.signed) {
     return <Navigate to={"/login"} replace />;
   }
 

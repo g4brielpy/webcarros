@@ -73,9 +73,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } else {
         setUser(null);
       }
+
+      setLoading(false);
     });
 
-    setLoading(false);
     return () => unsub();
   }, []);
 
