@@ -1,11 +1,17 @@
 import { Outlet } from "react-router";
+import { Footer } from "../components/Footer";
 import Header from "../components/Header";
 
 export default function LayoutRoot() {
   return (
-    <div className="bg-amber-300 min-h-dvh">
+    <div className="min-h-dvh flex flex-col">
       <Header />
-      <Outlet />
+
+      <main className="flex-1">
+        <Outlet />
+      </main>
+
+      <Footer />
     </div>
   );
 }
