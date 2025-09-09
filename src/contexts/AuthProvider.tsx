@@ -15,7 +15,7 @@ import {
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<userProps>(null);
-  const signed: boolean = !!user;
+  const [loading, setLoading] = useState<boolean>(true);
 
   async function login(
     email: string,
@@ -75,11 +75,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     });
 
+    setLoading(false);
     return () => unsub();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, signed, login, registerUser, logout }}>
+    <AuthContext.Provider
+      value={{ user, signed: !!user, loading, login, registerUser, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

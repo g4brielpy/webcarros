@@ -6,6 +6,7 @@ export type userProps = { uid: string; name?: string; email: string } | null;
 export interface AuthContextType {
   user: userProps;
   signed: boolean;
+  loading: boolean;
   login: (email: string, password: string) => Promise<UserCredential | Error>;
   registerUser: (
     name: string,
