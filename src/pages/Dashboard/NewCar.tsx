@@ -1,13 +1,16 @@
 import { FiUpload } from "react-icons/fi";
+
 import { InputCustom } from "../../components/UI/InputCustom";
+import { ButtonCustom } from "../../components/UI/ButtonCustom";
 
 export default function NewCar() {
   return (
-    <div className="container px-4 mx-auto my-8">
-      <main>
+    <div className="container px-4 mx-auto my-10">
+      <main className="space-y-8">
         <section>
-          <button>
-            <FiUpload />
+          <button className="flex flex-col items-center justify-center border-2 border-dashed border-gray-500 rounded-xl w-full h-44 text-gray-600">
+            <FiUpload size={32} />
+            <span className="mt-2 text-sm">Clique para enviar imagem</span>
           </button>
         </section>
 
@@ -15,14 +18,19 @@ export default function NewCar() {
           <form className="space-y-6">
             <InputCustom type="text" label="Nome do Carro" />
             <InputCustom type="text" label="Modelo" />
-            <div>
+
+            <div className="grid grid-cols-2 gap-4">
               <InputCustom label="Ano" />
               <InputCustom label="Km's rodados" />
             </div>
+
             <InputCustom label="Valor em R$" />
             <InputCustom type="text" label="Cidade" />
             <InputCustom type="text" label="WhatsApp" />
+
             <InputCustom type="text" label="Descrição" />
+
+            <ButtonCustom className="w-full">Cadastrar</ButtonCustom>
           </form>
         </section>
       </main>
