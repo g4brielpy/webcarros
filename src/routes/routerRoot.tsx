@@ -23,19 +23,22 @@ const router = createBrowserRouter([
         path: "detail/:id",
         element: <CarDetail />,
       },
+
       {
-        path: "dashboard",
+        path: "dashboard/",
         element: (
           <PrivateRoute>
             <Dashboard />
           </PrivateRoute>
         ),
-        children: [
-          {
-            path: "newcar",
-            element: <NewCar />,
-          },
-        ],
+      },
+      {
+        path: "dashboard/newcar",
+        element: (
+          <PrivateRoute>
+            <NewCar />
+          </PrivateRoute>
+        ),
       },
     ],
   },
