@@ -2,11 +2,13 @@ import { FiUpload } from "react-icons/fi";
 
 import { InputCustom } from "../../components/UI/InputCustom";
 import { ButtonCustom } from "../../components/UI/ButtonCustom";
+import { HeaderDashboard } from "../../components/HeaderDashboard";
 
 export default function NewCar() {
   return (
     <div className="container px-4 mx-auto my-10">
-      <main className="space-y-8">
+      <HeaderDashboard />
+      <main className="mt-8 space-y-8">
         <section>
           <button className="flex flex-col items-center justify-center border-2 border-dashed border-gray-500 rounded-xl w-full h-44 text-gray-600">
             <FiUpload size={32} />
