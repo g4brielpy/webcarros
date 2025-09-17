@@ -4,7 +4,19 @@ import { InputCustom } from "../../components/UI/InputCustom";
 import { ButtonCustom } from "../../components/UI/ButtonCustom";
 import { HeaderDashboard } from "../../components/HeaderDashboard";
 
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { newCarSchema, NewCarFormData } from "../../schemas/newCarSchema";
+
 export default function NewCar() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NewCarFormData>({
+    resolver: zodResolver(newCarSchema),
+  });
+
   return (
     <div className="container px-4 mx-auto my-10">
       <HeaderDashboard />
