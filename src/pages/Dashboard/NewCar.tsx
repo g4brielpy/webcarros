@@ -77,11 +77,24 @@ export default function NewCar() {
               error={errors.whatsapp?.message}
             />
 
-            <InputCustom
-              type="text"
-              label="Descrição"
-              {...register("description")}
-            />
+            <div className="flex flex-col w-full">
+              <label className="mb-1 text-sm font-medium text-gray-700">
+                Descrição
+              </label>
+              <textarea
+                {...register("description")}
+                className={`
+                  h-32 px-4 rounded-md border text-gray-900 placeholder-gray-500
+                bg-gray-50 shadow-sm transition-all duration-200 ease-in-out
+                  focus:outline-none focus:border-[#E11138] focus:ring-2 focus:ring-[#E11138] focus:shadow-md
+                  ${errors.description ? "border-red-500" : "border-gray-400"}`}
+              />
+              {errors.description && (
+                <span className="mt-1 text-sm text-red-500">
+                  {errors.description.message}
+                </span>
+              )}
+            </div>
 
             <ButtonCustom className="w-full">Cadastrar</ButtonCustom>
           </form>
