@@ -29,20 +29,59 @@ export default function NewCar() {
         </section>
 
         <section>
-          <form className="space-y-6">
-            <InputCustom type="text" label="Nome do Carro" />
-            <InputCustom type="text" label="Modelo" />
+          <form
+            className="space-y-6"
+            onSubmit={handleSubmit((data) => console.log(data))}
+          >
+            <InputCustom
+              type="text"
+              label="Nome do Carro"
+              {...register("name_car")}
+              error={errors.name_car?.message}
+            />
+            <InputCustom
+              type="text"
+              label="Modelo"
+              {...register("model")}
+              error={errors.model?.message}
+            />
 
             <div className="grid grid-cols-2 gap-4">
-              <InputCustom label="Ano" />
-              <InputCustom label="Km's rodados" />
+              <InputCustom
+                label="Ano"
+                {...register("year")}
+                error={errors.year?.message}
+              />
+              <InputCustom
+                label="Km's rodados"
+                {...register("km")}
+                error={errors.km?.message}
+              />
             </div>
 
-            <InputCustom label="Valor em R$" />
-            <InputCustom type="text" label="Cidade" />
-            <InputCustom type="text" label="WhatsApp" />
+            <InputCustom
+              label="Valor em R$"
+              {...register("price")}
+              error={errors.price?.message}
+            />
+            <InputCustom
+              type="text"
+              label="Cidade"
+              {...register("city")}
+              error={errors.city?.message}
+            />
+            <InputCustom
+              type="text"
+              label="WhatsApp"
+              {...register("whatsapp")}
+              error={errors.whatsapp?.message}
+            />
 
-            <InputCustom type="text" label="Descrição" />
+            <InputCustom
+              type="text"
+              label="Descrição"
+              {...register("description")}
+            />
 
             <ButtonCustom className="w-full">Cadastrar</ButtonCustom>
           </form>
