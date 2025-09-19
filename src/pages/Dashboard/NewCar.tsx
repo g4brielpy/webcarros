@@ -22,10 +22,16 @@ export default function NewCar() {
       <HeaderDashboard />
       <main className="mt-8 space-y-8">
         <section>
-          <button className="flex flex-col items-center justify-center border-2 border-dashed border-gray-500 rounded-xl w-full h-44 text-gray-600">
+          <div className="relative flex flex-col items-center justify-center border-2 border-dashed cursor-pointer border-gray-500 rounded-xl w-full h-44 text-gray-600">
+            <input
+              type="file"
+              name="image"
+              id="image"
+              className="absolute w-full h-full opacity-0 cursor-pointer"
+            />
             <FiUpload size={32} />
             <span className="mt-2 text-sm">Clique para enviar imagem</span>
-          </button>
+          </div>
         </section>
 
         <section>
