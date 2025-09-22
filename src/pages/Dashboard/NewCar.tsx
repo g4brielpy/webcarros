@@ -17,6 +17,19 @@ export default function NewCar() {
     resolver: zodResolver(newCarSchema),
   });
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file && (file.type == "image/jpeg" || file.type == "image/png")) {
+      console.log("Arquivo selecionado:", file);
+    } else {
+      console.log(
+        "Por favor, selecione um arquivo de imagem válido (JPEG ou PNG)."
+      );
+      return;
+    }
+  };
+
   return (
     <div className="container px-4 mx-auto my-10">
       <HeaderDashboard />
@@ -28,6 +41,7 @@ export default function NewCar() {
               name="image"
               id="image"
               className="absolute w-full h-full opacity-0 cursor-pointer"
+              onChange={handleFileChange}
             />
             <FiUpload size={32} />
             <span className="mt-2 text-sm">Clique para enviar imagem</span>
