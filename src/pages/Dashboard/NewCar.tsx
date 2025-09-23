@@ -28,8 +28,12 @@ export default function NewCar() {
     const file = event.target.files?.[0];
 
     if (file && (file.type == "image/jpeg" || file.type == "image/png")) {
-      const urlImage = await uploadImage(file, authLogin!.user!.uid);
-      console.log(urlImage);
+      try {
+        const urlImage = await uploadImage(file, authLogin!.user!.uid);
+        console.log(urlImage);
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       console.log(
         "Por favor, selecione um arquivo de imagem válido (JPEG ou PNG)."
