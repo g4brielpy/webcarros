@@ -1,5 +1,8 @@
-import { FiUpload } from "react-icons/fi";
+import { useContext } from "react";
+import { AuthContext, AuthContextType } from "../../contexts/AuthContext";
+import { uploadImage } from "../../utils/uploadImage";
 
+import { FiUpload } from "react-icons/fi";
 import { InputCustom } from "../../components/UI/InputCustom";
 import { ButtonCustom } from "../../components/UI/ButtonCustom";
 import { HeaderDashboard } from "../../components/HeaderDashboard";
@@ -9,6 +12,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { newCarSchema, NewCarFormData } from "../../schemas/newCarSchema";
 
 export default function NewCar() {
+  const authLogin = useContext<AuthContextType | null>(AuthContext);
+
   const {
     register,
     handleSubmit,
@@ -17,11 +22,14 @@ export default function NewCar() {
     resolver: zodResolver(newCarSchema),
   });
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
 
     if (file && (file.type == "image/jpeg" || file.type == "image/png")) {
-      console.log("Arquivo selecionado:", file);
+      const urlImage = await uploadImage(file, authLogin!.user!.uid);
+      console.log(urlImage);
     } else {
       console.log(
         "Por favor, selecione um arquivo de imagem válido (JPEG ou PNG)."
