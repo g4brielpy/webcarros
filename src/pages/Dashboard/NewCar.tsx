@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext, AuthContextType } from "../../contexts/AuthContext";
 import { uploadImage } from "../../utils/uploadImage";
 
@@ -13,6 +13,7 @@ import { newCarSchema, NewCarFormData } from "../../schemas/newCarSchema";
 
 export default function NewCar() {
   const authLogin = useContext<AuthContextType | null>(AuthContext);
+  const [imagesUrl, setImagesUrl] = useState<string[]>([]);
 
   const {
     register,
@@ -30,9 +31,11 @@ export default function NewCar() {
     if (file && (file.type == "image/jpeg" || file.type == "image/png")) {
       try {
         const urlImage = await uploadImage(file, authLogin!.user!.uid);
-        console.log(urlImage);
+        setImagesUrl((prev) => [...prev, urlImage]);
       } catch (error) {
         console.error(error);
+      } finally {
+        console.log(imagesUrl);
       }
     } else {
       console.log(
@@ -46,8 +49,15 @@ export default function NewCar() {
     <div className="container px-4 mx-auto my-10">
       <HeaderDashboard />
       <main className="mt-8 space-y-8">
-        <section>
-          <div className="relative flex flex-col items-center justify-center border-2 border-dashed cursor-pointer border-gray-500 rounded-xl w-full h-44 text-gray-600">
+        <section className="h-44 flex flex-col sm:flex-row gap-4 ">
+          <div
+            className="
+            relative flex flex-col items-center justify-center 
+            border-2 border-dashed cursor-pointer 
+            border-gray-500 rounded-xl h-full text-gray-600
+            min-w-[200px] w-1/3 
+            "
+          >
             <input
               type="file"
               name="image"
@@ -58,6 +68,19 @@ export default function NewCar() {
             <FiUpload size={32} />
             <span className="mt-2 text-sm">Clique para enviar imagem</span>
           </div>
+
+          {imagesUrl.length > 0 && (
+            <div className="bg-blue-40 flex gap-2 overflow-x-scroll h-full px-2">
+              {imagesUrl.map((url, index) => (
+                <img
+                  key={index}
+                  src={url}
+                  alt={`Imagem ${index + 1}`}
+                  className="h-full rounded-lg p-1 object-cover border border-gray-500"
+                />
+              ))}
+            </div>
+          )}
         </section>
 
         <section>
