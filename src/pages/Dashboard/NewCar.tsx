@@ -1,6 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext, AuthContextType } from "../../contexts/AuthContext";
+
 import { uploadImage } from "../../utils/uploadImage";
+import { getAllImagesUrls } from "../../utils/getAllImagesUrls";
 
 import { FiUpload } from "react-icons/fi";
 import { InputCustom } from "../../components/UI/InputCustom";
@@ -44,6 +46,21 @@ export default function NewCar() {
       return;
     }
   };
+
+  useEffect(() => {
+    async function fetchImages() {
+      try {
+        const urls = await getAllImagesUrls(authLogin!.user!.uid);
+        setImagesUrl(urls);
+      } catch (error) {
+        alert(error);
+      }
+    }
+
+    if (authLogin) {
+      fetchImages();
+    }
+  }, [authLogin]);
 
   return (
     <div className="container px-4 mx-auto my-10">
