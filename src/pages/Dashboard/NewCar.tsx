@@ -4,7 +4,7 @@ import { AuthContext, AuthContextType } from "../../contexts/AuthContext";
 import { uploadImage } from "../../utils/uploadImage";
 import { getAllImagesUrls } from "../../utils/getAllImagesUrls";
 
-import { FiUpload } from "react-icons/fi";
+import { FiUpload, FiTrash } from "react-icons/fi";
 import { InputCustom } from "../../components/UI/InputCustom";
 import { ButtonCustom } from "../../components/UI/ButtonCustom";
 import { HeaderDashboard } from "../../components/HeaderDashboard";
@@ -89,12 +89,16 @@ export default function NewCar() {
           {imagesUrl.length > 0 && (
             <div className="bg-blue-40 flex gap-2 overflow-x-scroll h-full px-2">
               {imagesUrl.map((url, index) => (
-                <img
-                  key={index}
-                  src={url}
-                  alt={`Imagem ${index + 1}`}
-                  className="h-full rounded-lg p-1 object-cover border border-gray-500"
-                />
+                <div key={index} className="h-full relative">
+                  <img
+                    src={url}
+                    alt={`Imagem ${index + 1}`}
+                    className="h-full rounded-lg p-1 object-cover border border-gray-500"
+                  />
+                  <button className="absolute top-4 right-4 text-red-500 font-bold cursor-pointer hover:text-red-700 transition-colors">
+                    <FiTrash size={24} />
+                  </button>
+                </div>
               ))}
             </div>
           )}
