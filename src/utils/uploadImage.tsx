@@ -3,13 +3,19 @@ import { FirebaseError } from "firebase/app";
 
 import { storage } from "../firebase/firebaseConnection";
 
-export async function uploadImage(file: File, userId: string): Promise<string> {
+export async function uploadImage(
+  file: File,
+  userId: string
+): Promise<{ name: string; url: string }> {
   try {
     const storageRef = ref(storage, `images/${userId}/${file.name}`);
     await uploadBytes(storageRef, file);
 
     const url = await getDownloadURL(storageRef);
-    return url;
+    return {
+      name: file.name,
+      url: url,
+    };
   } catch (error) {
     if (error instanceof FirebaseError) {
       switch (error.code) {
