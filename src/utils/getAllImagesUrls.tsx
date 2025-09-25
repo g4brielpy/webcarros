@@ -3,13 +3,20 @@ import { FirebaseError } from "firebase/app";
 
 import { storage } from "../firebase/firebaseConnection";
 
-export async function getAllImagesUrls(userId: string): Promise<string[]> {
+export async function getAllImagesUrls(
+  userId: string
+): Promise<{ url: Promise<string>; name: string }[]> {
   try {
     const imagesRef = ref(storage, `images/${userId}/`);
     const listResult = await listAll(imagesRef);
 
     const urls = await Promise.all(
-      listResult.items.map((itemRef) => getDownloadURL(itemRef))
+      listResult.items.map((itemRef) => {
+        return {
+          url: getDownloadURL(itemRef),
+          name: itemRef.name,
+        };
+      })
     );
     return urls;
   } catch (error) {
