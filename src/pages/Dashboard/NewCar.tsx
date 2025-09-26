@@ -15,7 +15,9 @@ import { newCarSchema, NewCarFormData } from "../../schemas/newCarSchema";
 
 export default function NewCar() {
   const authLogin = useContext<AuthContextType | null>(AuthContext);
-  const [imagesUrl, setImagesUrl] = useState<string[]>([]);
+  const [imagesUrl, setImagesUrl] = useState<{ name: string; url: string }[]>(
+    []
+  );
 
   const {
     register,
@@ -45,6 +47,10 @@ export default function NewCar() {
       );
       return;
     }
+  };
+
+  const handleRemoveImage = (name: string) => {
+    console.log(name);
   };
 
   useEffect(() => {
@@ -88,14 +94,17 @@ export default function NewCar() {
 
           {imagesUrl.length > 0 && (
             <div className="bg-blue-40 flex gap-2 overflow-x-scroll h-full px-2">
-              {imagesUrl.map((url, index) => (
+              {imagesUrl.map((image, index) => (
                 <div key={index} className="h-full relative">
                   <img
-                    src={url}
+                    src={image.url}
                     alt={`Imagem ${index + 1}`}
                     className="h-full rounded-lg p-1 object-cover border border-gray-500"
                   />
-                  <button className="absolute top-4 right-4 text-red-500 font-bold cursor-pointer hover:text-red-700 transition-colors">
+                  <button
+                    onClick={() => handleRemoveImage(image.name)}
+                    className="absolute top-4 right-4 text-red-500 font-bold cursor-pointer hover:text-red-700 transition-colors"
+                  >
                     <FiTrash size={24} />
                   </button>
                 </div>

@@ -1,23 +1,24 @@
-import { getDownloadURL, ref, listAll } from "firebase/storage";
+import {
+  getDownloadURL,
+  ref,
+  listAll,
+  StorageReference,
+} from "firebase/storage";
 import { FirebaseError } from "firebase/app";
-
 import { storage } from "../firebase/firebaseConnection";
 
-export async function getAllImagesUrls(
-  userId: string
-): Promise<{ url: Promise<string>; name: string }[]> {
+async function getUrl(itemRef: StorageReference) {
+  const url = await getDownloadURL(itemRef);
+  return { url, name: itemRef.name };
+}
+
+export async function getAllImagesUrls(userId: string) {
   try {
     const imagesRef = ref(storage, `images/${userId}/`);
     const listResult = await listAll(imagesRef);
 
-    const urls = await Promise.all(
-      listResult.items.map((itemRef) => {
-        return {
-          url: getDownloadURL(itemRef),
-          name: itemRef.name,
-        };
-      })
-    );
+    const urls = await Promise.all(listResult.items.map(getUrl));
+
     return urls;
   } catch (error) {
     if (error instanceof FirebaseError) {
