@@ -1,9 +1,10 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext, AuthContextType } from "../../contexts/AuthContext";
 
-import { uploadImage } from "../../utils/uploadImage";
 import { getAllImagesUrls } from "../../utils/getAllImagesUrls";
+import { uploadImage } from "../../utils/uploadImage";
 import { deleteImage } from "../../utils/deleteImage";
+import { registerCar } from "../../utils/registerCar";
 
 import { FiUpload, FiTrash } from "react-icons/fi";
 import { InputCustom } from "../../components/UI/InputCustom";
@@ -59,6 +60,13 @@ export default function NewCar() {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleSubmitCar = async (data: NewCarFormData) => {
+    if (imagesUrl.length > 0) {
+      alert("Cadastre pelo menos uma imagem para o carro");
+    }
+    registerCar(data, imagesUrl, authLogin!.user!.uid);
   };
 
   useEffect(() => {
@@ -122,10 +130,7 @@ export default function NewCar() {
         </section>
 
         <section>
-          <form
-            className="space-y-6"
-            onSubmit={handleSubmit((data) => console.log(data))}
-          >
+          <form className="space-y-6" onSubmit={handleSubmit(handleSubmitCar)}>
             <InputCustom
               type="text"
               label="Nome do Carro"
