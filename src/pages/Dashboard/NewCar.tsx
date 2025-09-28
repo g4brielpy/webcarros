@@ -3,6 +3,7 @@ import { AuthContext, AuthContextType } from "../../contexts/AuthContext";
 
 import { uploadImage } from "../../utils/uploadImage";
 import { getAllImagesUrls } from "../../utils/getAllImagesUrls";
+import { deleteImage } from "../../utils/deleteImage";
 
 import { FiUpload, FiTrash } from "react-icons/fi";
 import { InputCustom } from "../../components/UI/InputCustom";
@@ -49,8 +50,15 @@ export default function NewCar() {
     }
   };
 
-  const handleRemoveImage = (name: string) => {
-    console.log(name);
+  const handleRemoveImage = async (name: string, indexImageDel: number) => {
+    try {
+      await deleteImage(authLogin!.user!.uid, name);
+      setImagesUrl((prev) =>
+        prev.filter((_, index) => index !== indexImageDel)
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -102,7 +110,7 @@ export default function NewCar() {
                     className="h-full rounded-lg p-1 object-cover border border-gray-500"
                   />
                   <button
-                    onClick={() => handleRemoveImage(image.name)}
+                    onClick={() => handleRemoveImage(image.name, index)}
                     className="absolute top-4 right-4 text-red-500 font-bold cursor-pointer hover:text-red-700 transition-colors"
                   >
                     <FiTrash size={24} />
