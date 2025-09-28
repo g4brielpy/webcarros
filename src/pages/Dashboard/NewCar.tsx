@@ -14,6 +14,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { newCarSchema, NewCarFormData } from "../../schemas/newCarSchema";
 
+import { toast } from "sonner";
+
 export default function NewCar() {
   const authLogin = useContext<AuthContextType | null>(AuthContext);
   const [imagesUrl, setImagesUrl] = useState<{ name: string; url: string }[]>(
@@ -38,14 +40,10 @@ export default function NewCar() {
         const urlImage = await uploadImage(file, authLogin!.user!.uid);
         setImagesUrl((prev) => [...prev, urlImage]);
       } catch (error) {
-        console.error(error);
-      } finally {
-        console.log(imagesUrl);
+        toast.error((error as Error).message);
       }
     } else {
-      console.log(
-        "Por favor, selecione um arquivo de imagem válido (JPEG ou PNG)."
-      );
+      toast.warning("Selecione um arquivo de imagem válido (JPEG ou PNG).");
       return;
     }
   };
@@ -57,16 +55,22 @@ export default function NewCar() {
         prev.filter((_, index) => index !== indexImageDel)
       );
     } catch (error) {
-      console.error(error);
+      toast.error((error as Error).message);
     }
   };
 
   const handleSubmitCar = async (data: NewCarFormData) => {
     if (imagesUrl.length == 0) {
-      alert("Cadastre pelo menos uma imagem para o carro");
+      toast.warning("Cadastre pelo menos uma imagem do carro!");
       return;
     }
-    await registerCar(data, imagesUrl, authLogin!.user!.uid);
+
+    try {
+      await registerCar(data, imagesUrl, authLogin!.user!.uid);
+      toast.success("Carro cadastrado com sucesso!");
+    } catch (error: unknown) {
+      toast.error((error as Error).message);
+    }
   };
 
   return (
