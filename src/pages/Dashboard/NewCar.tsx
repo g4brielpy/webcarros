@@ -64,8 +64,9 @@ export default function NewCar() {
   const handleSubmitCar = async (data: NewCarFormData) => {
     if (imagesUrl.length == 0) {
       alert("Cadastre pelo menos uma imagem para o carro");
+      return;
     }
-    registerCar(data, imagesUrl, authLogin!.user!.uid);
+    await registerCar(data, imagesUrl, authLogin!.user!.uid);
   };
 
   return (
