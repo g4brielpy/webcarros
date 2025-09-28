@@ -1,7 +1,6 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { AuthContext, AuthContextType } from "../../contexts/AuthContext";
 
-import { getAllImagesUrls } from "../../utils/getAllImagesUrls";
 import { uploadImage } from "../../utils/uploadImage";
 import { deleteImage } from "../../utils/deleteImage";
 import { registerCar } from "../../utils/registerCar";
@@ -63,26 +62,11 @@ export default function NewCar() {
   };
 
   const handleSubmitCar = async (data: NewCarFormData) => {
-    if (imagesUrl.length > 0) {
+    if (imagesUrl.length == 0) {
       alert("Cadastre pelo menos uma imagem para o carro");
     }
     registerCar(data, imagesUrl, authLogin!.user!.uid);
   };
-
-  useEffect(() => {
-    async function fetchImages() {
-      try {
-        const urls = await getAllImagesUrls(authLogin!.user!.uid);
-        setImagesUrl(urls);
-      } catch (error) {
-        alert(error);
-      }
-    }
-
-    if (authLogin) {
-      fetchImages();
-    }
-  }, [authLogin]);
 
   return (
     <div className="container px-4 mx-auto my-10">
