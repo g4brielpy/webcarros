@@ -25,6 +25,7 @@ export default function NewCar() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<NewCarFormData>({
     resolver: zodResolver(newCarSchema),
@@ -70,6 +71,9 @@ export default function NewCar() {
       toast.success("Carro cadastrado com sucesso!");
     } catch (error: unknown) {
       toast.error((error as Error).message);
+    } finally {
+      setImagesUrl([]);
+      reset();
     }
   };
 
