@@ -1,8 +1,16 @@
+import { useEffect } from "react";
+
 import { CardCar } from "../../components/CardCar";
 import { InputCustom } from "../../components/UI/InputCustom";
 import { ButtonCustom } from "../../components/UI/ButtonCustom";
 
+import { getCars } from "../../utils/getCars";
+
 export default function Home() {
+  useEffect(() => {
+    getCars();
+  }, []);
+
   return (
     <div className="container px-4 mx-auto my-8">
       <section className="my-20">
@@ -13,7 +21,7 @@ export default function Home() {
       </section>
 
       <main>
-        <h1 className="text-center text-2xl md:text-4xl font-bold">
+        <h1 className="text-center text-2xl md:text-4xl font-bold mb-4">
           Carros novos e usados em todo Brasil
         </h1>
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
