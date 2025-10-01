@@ -1,15 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { CardCar } from "../../components/CardCar";
 import { InputCustom } from "../../components/UI/InputCustom";
 import { ButtonCustom } from "../../components/UI/ButtonCustom";
 
 import { getCars } from "../../utils/getCars";
+import { CarsData } from "../../utils/getCars";
 
 export default function Home() {
+  const [listCars, setListCars] = useState<CarsData[]>([]);
+
   useEffect(() => {
-    getCars();
+    async function fetchCar() {
+      const cars = await getCars();
+      setListCars(cars);
+    }
+
+    fetchCar();
   }, []);
+
+  console.log(listCars);
 
   return (
     <div className="container px-4 mx-auto my-8">

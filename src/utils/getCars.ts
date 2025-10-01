@@ -4,14 +4,14 @@ import { db } from "../firebase/firebaseConnection";
 
 import { NewCarFormData } from "../schemas/newCarSchema";
 
-interface CarsData extends NewCarFormData {
+export interface CarsData extends NewCarFormData {
   uid: string;
   idCar: string;
   imagens: string[];
   createdAt: Timestamp;
 }
 
-export async function getCars() {
+export async function getCars(): Promise<CarsData[]> {
   const docRef = collection(db, "cars");
 
   try {
@@ -25,7 +25,7 @@ export async function getCars() {
       idCar: doc.id,
     }));
 
-    console.log(listCars);
+    return listCars;
   } catch (error) {
     if (error instanceof FirebaseError) {
       switch (error.code) {
