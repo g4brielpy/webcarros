@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router";
 
+import AppLayout from "../layouts/AppLayout";
+
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -10,7 +12,25 @@ import NewCars from "../pages/Dashboard/NewCars";
 export const router = createBrowserRouter([
   {
     path: "/",
-    Component: Home,
+    Component: AppLayout,
+    children: [
+      {
+        index: true,
+        Component: Home,
+      },
+      {
+        path: "details/:id",
+        Component: CarDetails,
+      },
+      {
+        path: "dashboard/my-cars",
+        Component: MyCars,
+      },
+      {
+        path: "dashboard/new-cars",
+        Component: NewCars,
+      },
+    ],
   },
   {
     path: "/login",
@@ -19,17 +39,5 @@ export const router = createBrowserRouter([
   {
     path: "/register",
     Component: Register,
-  },
-  {
-    path: "/details/:id",
-    Component: CarDetails,
-  },
-  {
-    path: "/dashboard/my-cars",
-    Component: MyCars,
-  },
-  {
-    path: "/dashboard/new-cars",
-    Component: NewCars,
   },
 ]);
